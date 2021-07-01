@@ -1,0 +1,225 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Admin panel</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="navbar navbar-dark bg-dark navbar-expand d-flex" style="width:100%">
+            <div class="p-2">
+            <span class="text-white font-weight-bold" th:text="${principal.email}"></span>
+            </div>
+            <div class="p-2">
+            <span class="text-white"> with roles: </span>
+            </div>
+                <div class="p-2">
+                    <th:block th:each="role : ${roles}">
+                        <span class="text-white" th:text="${role.role}"></span>
+                    </th:block>
+                </div>
+            <div class="ml-auto p-2">
+            <ul class="navbar-nav">
+                <li class="navbar-item">
+                    <a class="nav-link d-flex justify-content-end" href="/logout">Logout</a>
+                </li>
+            </ul>
+            </div>
+
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-2 pl-0 pr-0 mt-3">
+            <nav class="navbar navbar-dark bg-primary">
+                <a class="text-white" href="/admin">Admin</a>
+            </nav>
+            <nav class="navbar navbar-light" style="background-color: white">
+                <a href="/user">User</a>
+            </nav>
+        </div>
+        <div class="col-10 text-dark" style="min-height:1000px;background-color:#e9ecef;">
+            <h2 class="mt-3 mb-3">Admin panel</h2>
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a id="userTab" class="nav-link active" data-toggle="tab" href="#allUsers">Users table</a>
+                </li>
+                <li class="nav-item">
+                    <a id="newUserTab" class="nav-link" data-toggle="tab" href="#newUser">New user</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+            <div class="tab-pane active container" id="allUsers">
+            <h6 class="pt-3 pb-3">All users</h6>
+            <table id="userTable" class="table table-hover bg-white">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Roles</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+            </div>
+            <div class="tab-pane container" id="newUser">
+                <h6 class="pt-3 pb-3">Add new user</h6>
+                <div style="background-color: white">
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4">
+                <form th:object="${newUser}" id="newUserForm">
+                    <input class="form-control" type="hidden" th:field="*{id}" id="id"/>
+                    <div class="form-group mb-2 text-center">
+                            <label for="name" class="col-form-label col-form-label-lg pt-0 pb-0">First name</label>
+                            <input class="form-control" type="text" th:field="*{name}" id="name" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                            <label for="surname" class="col-form-label col-form-label-lg pt-0 pb-0">Last name</label>
+                            <input class="form-control" type="text" th:field="*{surname}" id="surname" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                            <label for="age" class="col-form-label col-form-label-lg pt-0 pb-0">Age</label>
+                            <input class="form-control" type="text" th:field="*{age}" id="age" />
+                        </div>
+                    <div class="form-group mb-2 text-center">
+                            <label for="email" class="col-form-label col-form-label-lg pt-0 pb-0">Email</label>
+                            <input type="text" class="form-control" th:field="*{email}" id="email" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                            <label for="email" class="col-form-label col-form-label-lg pt-0 pb-0">Username</label>
+                            <input type="text" class="form-control" th:field="*{username}" id="username" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                            <label for="password" class="col-form-label col-form-label-lg pt-0 pb-0">Password</label>
+                            <input type="password" class="form-control" th:field="*{password}" id="password" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                        <label for="roles" class="col-form-label col-form-label-lg pt-0 pb-0">Role</label>
+                        <select class="form-control" multiple th:field="*{roles}" id="roles">
+                            <th:block th:each="role : ${roles}">
+                                <option th:value="${role.id}" th:text="${role.role}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="form-group text-center">
+                        <a href="#" id="addNewUserButton" class="btn btn-success">Add new user</a>
+                    </div>
+                </form>
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div th:fragment="editUserModal" id="editUserModalForm"></div>
+    <div th:fragment="deleteUserModal" id="deleteUserModalForm"></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function editUserModal(id){
+        $.ajax({
+            url : "admin/edit?id=" + id,
+            success : function(data){
+                $("#editUserModalForm").html(data);
+                $("#editUserModal").modal({
+                    backdrop : 'static'
+                });
+            }
+        });
+    }
+
+    function deleteUserModal(id){
+        $.ajax({
+            url : "admin/delete?id=" + id,
+            success : function(data){
+                $("#deleteUserModalForm").html(data);
+                $("#deleteUserModal").modal({
+                    backdrop : 'static'
+                });
+            }
+        });
+
+    }
+
+    function fillUsersTable(){
+        $("#userTable tbody").empty();
+        $.ajax({
+            method: "get",
+            url: "/api/users",
+            success: function (data) {
+                let tableInfo = "";
+                for(let i=0; i < data.length; i++){
+                    tableInfo += "<tr><td>" + data[i].id + "</td>" + "<td>" + data[i].name + "</td>" + "<td>"
+                        + data[i].surname + "</td>" + "<td>" + data[i].age + "</td>" + "<td>" + data[i].email + "</td>"
+                        + "<td>" + data[i].username + "</td>" + "<td>";
+                    for(let j=0; j < data[i].roles.length; j++){
+                        tableInfo += data[i].roles[j].role + " ";
+                    };
+                    tableInfo += "</td>" +`<td><a href="#" class="btn btn-info"
+                            onclick="editUserModal('`+ data[i].id +`');">Edit</a></td>`;
+                    tableInfo += "<td>" + `<a href="#" class="btn btn-danger"
+                           onclick="deleteUserModal('`+ data[i].id +`');">Delete</a></td>`;
+                    tableInfo += "</tr>";
+                }
+                $("#userTable tbody").append(tableInfo);
+            }
+        });
+    }
+
+    $("#addNewUserButton").click(function(e){
+        e.preventDefault();
+        let user = {};
+        user.name = $("#newUserForm #name").val();
+        user.surname = $("#newUserForm #surname").val();
+        user.age =  parseInt($("#newUserForm #age").val());
+        user.email = $("#newUserForm #email").val();
+        user.username = $("#newUserForm #username").val();
+        user.password = $("#newUserForm #password").val();
+        user.roles = [];
+        $("#roles option:selected").each(function(i){
+            let role = {};
+            role.id = $(this).val();
+            role.role = $(this).text();
+            role.authority = $(this).text();
+            user.roles[i] = role;
+        });
+        let json = JSON.stringify(user);
+        $.ajax({
+            url : "/api/users",
+            type : "post",
+            dataType : "json",
+            contentType : "application/json",
+            data : json,
+            success : function(data){
+                $("#newUserForm")[0].reset();
+                fillUsersTable();
+                $("#userTab").click();
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        fillUsersTable();
+    });
+
+</script>
+</body>
+</html>

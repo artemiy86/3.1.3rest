@@ -1,0 +1,96 @@
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalTitle">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editUserModalForm" method="post" th:action="@{/admin/edit}">
+                <div class="modal-body">
+                    <div class="form-group mb-2 text-center">
+                        <label for="id" class="col-form-label col-form-label-lg pt-0 pb-0">ID</label>
+                        <input class="form-control" type="text" readonly th:field="${user.id}" id="id"/>
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                        <label for="name" class="col-form-label col-form-label-lg pt-0 pb-0">First name</label>
+                        <input class="form-control" type="text" th:field="${user.name}" id="name" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                        <label for="surname" class="col-form-label col-form-label-lg pt-0 pb-0">Last name</label>
+                        <input class="form-control" type="text" th:field="${user.surname}" id="surname" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                        <label for="age" class="col-form-label col-form-label-lg pt-0 pb-0">Age</label>
+                        <input class="form-control" type="text" th:field="${user.age}" id="age" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                        <label for="email" class="col-form-label col-form-label-lg pt-0 pb-0">Email</label>
+                        <input type="text" class="form-control" th:field="${user.email}" id="email" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                        <label for="email" class="col-form-label col-form-label-lg pt-0 pb-0">Username</label>
+                        <input type="text" class="form-control" th:field="${user.username}" id="username" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                        <label for="password" class="col-form-label col-form-label-lg pt-0 pb-0">Password</label>
+                        <input type="password" class="form-control" th:field="${user.password}" id="password" />
+                    </div>
+                    <div class="form-group mb-2 text-center">
+                        <label for="roles" class="col-form-label col-form-label-lg pt-0 pb-0">Role</label>
+                        <select class="form-control" multiple id="roles" name="roles">
+                            <th:block th:each="role : ${roles}">
+                                <option th:value="${role.id}" th:text="${role.role}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="#" class="btn btn-primary" id="editUserModalButton">Edit</a>
+            </div>
+        </div>
+        </form>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#editUserModalButton").click(function(e){
+        e.preventDefault();
+        let user = {};
+        user.id = $("#editUserModalForm #id").val();
+        user.name = $("#editUserModalForm #name").val();
+        user.surname = $("#editUserModalForm #surname").val();
+        user.age =  parseInt($("#editUserModalForm #age").val());
+        user.email = $("#editUserModalForm #email").val();
+        user.username = $("#editUserModalForm #username").val();
+        user.password = $("#editUserModalForm #password").val();
+        user.roles = [];
+        $("#editUserModalForm #roles option:selected").each(function(i){
+            let role = {};
+            role.id = $(this).val();
+            role.role = $(this).text();
+            role.authority = $(this).text();
+            user.roles[i] = role;
+        });
+        let json = JSON.stringify(user);
+        console.log(json);
+        $.ajax({
+            url : "/api/users",
+            type : "put",
+            dataType : "json",
+            contentType : "application/json",
+            data : json,
+            success : function(data){
+                $("#editUserModalForm").html(data);
+                $("#editUserModal").modal({
+                    backdrop : 'static'
+                });
+                fillUsersTable();
+            }
+        });
+        $("#editUserModal").modal("hide");
+    });
+</script>
