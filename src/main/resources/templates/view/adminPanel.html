@@ -82,32 +82,32 @@
                 <form id="newUserForm">
                     <input class="form-control" type="hidden" id="id"/>
                     <div class="form-group mb-2 text-center">
-                            <label for="name" class="col-form-label col-form-label-lg pt-0 pb-0">First name</label>
-                            <input class="form-control" type="text"  id="name" />
+                            <label for="newUserName" class="col-form-label col-form-label-lg pt-0 pb-0">First name</label>
+                            <input class="form-control" type="text"  id="newUserName" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                            <label for="surname" class="col-form-label col-form-label-lg pt-0 pb-0">Last name</label>
-                            <input class="form-control" type="text" id="surname" />
+                            <label for="newUserSurname" class="col-form-label col-form-label-lg pt-0 pb-0">Last name</label>
+                            <input class="form-control" type="text" id="newUserSurname" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                            <label for="age" class="col-form-label col-form-label-lg pt-0 pb-0">Age</label>
-                            <input class="form-control" type="text" id="age" />
+                            <label for="newUserAge" class="col-form-label col-form-label-lg pt-0 pb-0">Age</label>
+                            <input class="form-control" type="text" id="newUserAge" />
                         </div>
                     <div class="form-group mb-2 text-center">
-                            <label for="email" class="col-form-label col-form-label-lg pt-0 pb-0">Email</label>
-                            <input type="text" class="form-control" id="email" />
+                            <label for="newUserEmail" class="col-form-label col-form-label-lg pt-0 pb-0">Email</label>
+                            <input type="text" class="form-control" id="newUserEmail" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                            <label for="email" class="col-form-label col-form-label-lg pt-0 pb-0">Username</label>
-                            <input type="text" class="form-control" id="username" />
+                            <label for="newUserUsername" class="col-form-label col-form-label-lg pt-0 pb-0">Username</label>
+                            <input type="text" class="form-control" id="newUserUsername" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                            <label for="password" class="col-form-label col-form-label-lg pt-0 pb-0">Password</label>
-                            <input type="password" class="form-control" id="password" />
+                            <label for="newUserPassword" class="col-form-label col-form-label-lg pt-0 pb-0">Password</label>
+                            <input type="password" class="form-control" id="newUserPassword" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                        <label for="roles" class="col-form-label col-form-label-lg pt-0 pb-0">Role</label>
-                        <select class="form-control" multiple id="roles">
+                        <label for="newUserRoles" class="col-form-label col-form-label-lg pt-0 pb-0">Role</label>
+                        <select class="form-control" multiple id="newUserRoles">
 
                         </select>
                     </div>
@@ -147,164 +147,119 @@
             </div>
         </div>
     </div>
-    <div th:fragment="editUserModal" id="editUserModalForm"></div>
-    <div th:fragment="deleteUserModal" id="deleteUserModalForm"></div>
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalTitle">Edit user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="editUserModalForm" method="post" th:action="@{/admin/edit}">
+                    <div class="modal-body">
+                        <div class="form-group mb-2 text-center">
+                            <label for="editUserId" class="col-form-label col-form-label-lg pt-0 pb-0">ID</label>
+                            <input class="form-control" type="text" readonly id="editUserId"/>
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="editUserName" class="col-form-label col-form-label-lg pt-0 pb-0">First name</label>
+                            <input class="form-control" type="text" id="editUserName" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="editUserSurname" class="col-form-label col-form-label-lg pt-0 pb-0">Last name</label>
+                            <input class="form-control" type="text" id="editUserSurname" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="editUserAge" class="col-form-label col-form-label-lg pt-0 pb-0">Age</label>
+                            <input class="form-control" type="text" id="editUserAge" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="editUserEmail" class="col-form-label col-form-label-lg pt-0 pb-0">Email</label>
+                            <input type="text" class="form-control" id="editUserEmail" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="editUserUsername" class="col-form-label col-form-label-lg pt-0 pb-0">Username</label>
+                            <input type="text" class="form-control" id="editUserUsername" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="editUserPassword" class="col-form-label col-form-label-lg pt-0 pb-0">Password</label>
+                            <input type="password" class="form-control" id="editUserPassword" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="editUserRoles" class="col-form-label col-form-label-lg pt-0 pb-0">Role</label>
+                            <select class="form-control" multiple id="editUserRoles" name="roles">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a href="#" class="btn btn-primary" id="editUserModalButton">Edit</a>
+                    </div>
+            </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteUserModalTitle">Delete user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:method="delete">
+                    <div class="modal-body">
+                        <div class="form-group mb-2 text-center">
+                            <label for="deleteUserId" class="col-form-label col-form-label-lg pt-0 pb-0">ID</label>
+                            <input class="form-control" type="text" readonly id="deleteUserId"/>
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="deleteUserName" class="col-form-label col-form-label-lg pt-0 pb-0">First name</label>
+                            <input class="form-control" type="text" readonly id="deleteUserName" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="deleteUserSurname" class="col-form-label col-form-label-lg pt-0 pb-0">Last name</label>
+                            <input class="form-control" type="text" readonly id="deleteUserSurname" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="deleteUserAge" class="col-form-label col-form-label-lg pt-0 pb-0">Age</label>
+                            <input class="form-control" type="text" readonly id="deleteUserAge" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="deleteUserEmail" class="col-form-label col-form-label-lg pt-0 pb-0">Email</label>
+                            <input type="text" class="form-control" readonly id="deleteUserEmail" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="deleteUserEmail" class="col-form-label col-form-label-lg pt-0 pb-0">Username</label>
+                            <input type="text" class="form-control" readonly id="deleteUserUsername" />
+                        </div>
+                        <div class="form-group mb-2 text-center">
+                            <label for="deleteUserRoles" class="col-form-label col-form-label-lg pt-0 pb-0">Role</label>
+                            <select class="form-control" multiple readonly id="deleteUserRoles" name="roles">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a href="#" id="deleteUserModalButton" class="btn btn-primary">Delete</a>
+                    </div>
+            </div>
+            </form>
+
+        </div>
+    </div>
     <input type="hidden" id="user_id" th:value="${principal.id}">
 </div>
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script type="text/javascript">
-
-    function getUserDetailInfo(user_id){
-        $("#userDetailTable tbody").empty();
-        $.ajax({
-            method: "get",
-            url: "/api/users/" + $("#user_id").val(),
-            success: function (data) {
-
-                $("#userDetailEmail").empty();
-                $("#userDetailEmail").append("<span>" + data.email + "</span>");
-
-                let tableInfo = "<tr><td>" + data.id + "</td>" + "<td>" + data.name + "</td>" + "<td>"
-                    + data.surname + "</td>" + "<td>" + data.age + "</td>" + "<td>" + data.email + "</td>"
-                    + "<td>" + data.username + "</td>" + "<td>";
-                $("#userDetailRoles").empty();
-                for(let i=0; i < data.roles.length; i++){
-                    tableInfo += data.roles[i].role + " ";
-                    $("#userDetailRoles").append("<span class='text-white'>" + data.roles[i].role + "</span> ");
-                };
-                tableInfo += "</td></tr>";
-                $("#userDetailTable tbody").append(tableInfo);
-
-
-            }
-        });
-    }
-
-    function editUserModal(id){
-        $.ajax({
-            url : "admin/edit?id=" + id,
-            success : function(data){
-                $("#editUserModalForm").html(data);
-                $("#editUserModal").modal({
-                    backdrop : 'static'
-                });
-            }
-        });
-    }
-
-    function deleteUserModal(id){
-        $.ajax({
-            url : "admin/delete?id=" + id,
-            success : function(data){
-                $("#deleteUserModalForm").html(data);
-                $("#deleteUserModal").modal({
-                    backdrop : 'static'
-                });
-            }
-        });
-
-    }
-
-    function fillUsersTable(){
-        $("#userTable tbody").empty();
-        $.ajax({
-            method: "get",
-            url: "/api/users",
-            success: function (data) {
-                let tableInfo = "";
-                for(let i=0; i < data.length; i++){
-                    tableInfo += "<tr><td>" + data[i].id + "</td>" + "<td>" + data[i].name + "</td>" + "<td>"
-                        + data[i].surname + "</td>" + "<td>" + data[i].age + "</td>" + "<td>" + data[i].email + "</td>"
-                        + "<td>" + data[i].username + "</td>" + "<td>";
-                    for(let j=0; j < data[i].roles.length; j++){
-                        tableInfo += data[i].roles[j].role + " ";
-                    };
-                    tableInfo += "</td>" +`<td><a href="#" class="btn btn-info"
-                            onclick="editUserModal('`+ data[i].id +`');">Edit</a></td>`;
-                    tableInfo += "<td>" + `<a href="#" class="btn btn-danger"
-                           onclick="deleteUserModal('`+ data[i].id +`');">Delete</a></td>`;
-                    tableInfo += "</tr>";
-                }
-                $("#userTable tbody").append(tableInfo);
-            }
-        });
-    }
-
-    $("#userInfoButton").click(function(e){
-        e.preventDefault();
-        $("#adminNav").removeClass("navbar-dark");
-        $("#adminNav").removeClass("bg-primary");
-        $("#adminNav a").removeClass("text-white");
-        $("#userNav a").addClass("text-white");
-        $("#userNav").addClass("navbar-dark");
-        $("#userNav").addClass("bg-primary");
-        $("#adminPanelDiv").css({"display" : "none"});
-        $("#userInfoDiv").css({"display" : "block"});
-    });
-
-    $("#adminPanelButton").click(function(e){
-        e.preventDefault();
-        $("#adminNav").addClass("navbar-dark");
-        $("#adminNav").addClass("bg-primary");
-        $("#adminNav").removeClass("navbar-light");
-        $("#adminNav a").addClass("text-white");
-        $("#userNav").removeClass("navbar-dark");
-        $("#userNav").removeClass("bg-primary");
-        $("#userNav a").removeClass("text-white");
-        $("#userNav").addClass("navbar-light");
-        $("#adminPanelDiv").css({"display" : "block"});
-        $("#userInfoDiv").css({"display" : "none"});
-    });
-
-    $("#addNewUserButton").click(function(e){
-        e.preventDefault();
-        let user = {};
-        user.name = $("#newUserForm #name").val();
-        user.surname = $("#newUserForm #surname").val();
-        user.age =  parseInt($("#newUserForm #age").val());
-        user.email = $("#newUserForm #email").val();
-        user.username = $("#newUserForm #username").val();
-        user.password = $("#newUserForm #password").val();
-        user.roles = [];
-        $("#roles option:selected").each(function(i){
-            let role = {};
-            role.id = $(this).val();
-            role.role = $(this).text();
-            role.authority = $(this).text();
-            user.roles[i] = role;
-        });
-        let json = JSON.stringify(user);
-        $.ajax({
-            url : "/api/users",
-            type : "post",
-            dataType : "json",
-            contentType : "application/json",
-            data : json,
-            success : function(data){
-                $("#newUserForm")[0].reset();
-                getUserDetailInfo($("user_id").val());
-                fillUsersTable();
-                $("#userTab").click();
-            }
-        });
-    });
-
-    $(document).ready(function() {
-        $.ajax({
-            url: "/api/roles",
-            type : "get",
-            success : function(data){
-                for(let i=0; i<data.length; i++){
-                       $("#roles").append("<option value='" + data[i].id + "'>" + data[i].role + "<option>");
-                }
-            }
-        });
-        getUserDetailInfo($("user_id").val());
-        fillUsersTable();
-    });
-
-</script>
+<script src="js/frontApi.js"></script>
 </body>
 </html>

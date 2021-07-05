@@ -10,88 +10,47 @@
             <form id="editUserModalForm" method="post" th:action="@{/admin/edit}">
                 <div class="modal-body">
                     <div class="form-group mb-2 text-center">
-                        <label for="id" class="col-form-label col-form-label-lg pt-0 pb-0">ID</label>
-                        <input class="form-control" type="text" readonly th:field="${user.id}" id="id"/>
+                        <label for="editUserId" class="col-form-label col-form-label-lg pt-0 pb-0">ID</label>
+                        <input class="form-control" type="text" readonly id="editUserId"/>
                     </div>
                     <div class="form-group mb-2 text-center">
-                        <label for="name" class="col-form-label col-form-label-lg pt-0 pb-0">First name</label>
-                        <input class="form-control" type="text" th:field="${user.name}" id="name" />
+                        <label for="editUserName" class="col-form-label col-form-label-lg pt-0 pb-0">First name</label>
+                        <input class="form-control" type="text" id="editUserName" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                        <label for="surname" class="col-form-label col-form-label-lg pt-0 pb-0">Last name</label>
-                        <input class="form-control" type="text" th:field="${user.surname}" id="surname" />
+                        <label for="editUserSurname" class="col-form-label col-form-label-lg pt-0 pb-0">Last name</label>
+                        <input class="form-control" type="text" id="editUserSurname" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                        <label for="age" class="col-form-label col-form-label-lg pt-0 pb-0">Age</label>
-                        <input class="form-control" type="text" th:field="${user.age}" id="age" />
+                        <label for="editUserAge" class="col-form-label col-form-label-lg pt-0 pb-0">Age</label>
+                        <input class="form-control" type="text" id="editUserAge" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                        <label for="email" class="col-form-label col-form-label-lg pt-0 pb-0">Email</label>
-                        <input type="text" class="form-control" th:field="${user.email}" id="email" />
+                        <label for="editUserEmail" class="col-form-label col-form-label-lg pt-0 pb-0">Email</label>
+                        <input type="text" class="form-control" id="editUserEmail" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                        <label for="email" class="col-form-label col-form-label-lg pt-0 pb-0">Username</label>
-                        <input type="text" class="form-control" th:field="${user.username}" id="username" />
+                        <label for="editUserUsername" class="col-form-label col-form-label-lg pt-0 pb-0">Username</label>
+                        <input type="text" class="form-control" id="editUserUsername" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                        <label for="password" class="col-form-label col-form-label-lg pt-0 pb-0">Password</label>
-                        <input type="password" class="form-control" th:field="${user.password}" id="password" />
+                        <label for="editUserPassword" class="col-form-label col-form-label-lg pt-0 pb-0">Password</label>
+                        <input type="password" class="form-control" id="editUserPassword" />
                     </div>
                     <div class="form-group mb-2 text-center">
-                        <label for="roles" class="col-form-label col-form-label-lg pt-0 pb-0">Role</label>
-                        <select class="form-control" multiple id="roles" name="roles">
-                            <th:block th:each="role : ${roles}">
-                                <option th:value="${role.id}" th:text="${role.role}"></option>
-                            </th:block>
+                        <label for="editUserRoles" class="col-form-label col-form-label-lg pt-0 pb-0">Role</label>
+                        <select class="form-control" multiple id="editUserRoles" name="roles">
+
                         </select>
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <a href="#" class="btn btn-primary" id="editUserModalButton">Edit</a>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="#" class="btn btn-primary" id="editUserModalButton">Edit</a>
+                </div>
         </div>
         </form>
 
     </div>
 </div>
-
-<script type="text/javascript">
-    $("#editUserModalButton").click(function(e){
-        e.preventDefault();
-        let user = {};
-        user.id = $("#editUserModalForm #id").val();
-        user.name = $("#editUserModalForm #name").val();
-        user.surname = $("#editUserModalForm #surname").val();
-        user.age =  parseInt($("#editUserModalForm #age").val());
-        user.email = $("#editUserModalForm #email").val();
-        user.username = $("#editUserModalForm #username").val();
-        user.password = $("#editUserModalForm #password").val();
-        user.roles = [];
-        $("#editUserModalForm #roles option:selected").each(function(i){
-            let role = {};
-            role.id = $(this).val();
-            role.role = $(this).text();
-            role.authority = $(this).text();
-            user.roles[i] = role;
-        });
-        let json = JSON.stringify(user);
-        console.log(json);
-        $.ajax({
-            url : "/api/users",
-            type : "put",
-            dataType : "json",
-            contentType : "application/json",
-            data : json,
-            success : function(data){
-                $("#editUserModalForm").html(data);
-                $("#editUserModal").modal({
-                    backdrop : 'static'
-                });
-                fillUsersTable();
-                getUserDetailInfo($("#user_id").val());
-            }
-        });
-        $("#editUserModal").modal("hide");
-    });
-</script>
+<script src="js/frontApi.js"></script>

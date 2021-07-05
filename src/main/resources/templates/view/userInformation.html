@@ -42,7 +42,7 @@
             <div class="tab-content">
                 <div class="tab-pane active container" id="allUsers">
                     <h6 class="pt-3 pb-3">About user</h6>
-                    <table id="userTable" class="table table-hover bg-white">
+                    <table id="userDetailTable" class="table table-hover bg-white">
                         <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -67,42 +67,6 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script type="text/javascript">
-
-    function getUserInfo(){
-        $("#userTable tbody").empty();
-        $.ajax({
-            method: "get",
-            url: "/api/users/" + $("#user_id").val(),
-            success: function (data) {
-
-                $("#userDetailEmail").empty();
-                $("#userDetailEmail").append(data.email);
-
-                let tableInfo = "<tr><td>" + data.id + "</td>" + "<td>" + data.name + "</td>" + "<td>"
-                    + data.surname + "</td>" + "<td>" + data.age + "</td>" + "<td>" + data.email + "</td>"
-                    + "<td>" + data.username + "</td>" + "<td>";
-                $("#userDetailRoles").empty();
-                for(let i=0; i < data.roles.length; i++){
-                    tableInfo += data.roles[i].role + " ";
-                    $("#userDetailRoles").append("<span class='text-white'>" + data.roles[i].role + "</span> ");
-                };
-                tableInfo += "</td></tr>";
-                $("#userTable tbody").append(tableInfo);
-
-            }
-        });
-    }
-
-    $(document).ready(function() {
-        getUserInfo();
-    });
-
-    $("#userInformationPanel").click(function(e){
-        e.preventDefault();
-        getUserInfo();
-    });
-
-</script>
+<script src="js/frontApi.js"></script>
 </body>
 </html>
