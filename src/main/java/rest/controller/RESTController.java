@@ -2,8 +2,13 @@ package rest.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rest.model.Role;
 import rest.model.User;
+import rest.service.RoleServiceImpl;
 import rest.service.UserServiceImpl;
 
 import java.util.List;
@@ -13,38 +18,50 @@ import java.util.List;
 public class RESTController {
 
     private UserServiceImpl service;
+    private RoleServiceImpl roleService;
 
     @Autowired
-    public RESTController(UserServiceImpl service) {
+    public RESTController(UserServiceImpl service, RoleServiceImpl roleService) {
         this.service = service;
+        this.roleService = roleService;
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers(){
-        return service.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers(){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        return new ResponseEntity<>(service.getAllUsers(), responseHeaders, HttpStatus.OK);
+    }
+    @GetMapping("/roles")
+    public ResponseEntity<List<Role>> getAllRoles(){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        return new ResponseEntity<>(roleService.getAllRoles(), responseHeaders, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable long id){
-        return service.getUserById(id);
+    public ResponseEntity<User> getUser(@PathVariable long id){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        return new ResponseEntity<>(service.getUserById(id),responseHeaders,HttpStatus.OK);
     }
 
     @PostMapping("/users")
-    public User addNewUser(@RequestBody User user){
-        return service.createUser(user.getName(),user.getSurname(),user.getAge(),
-                user.getEmail(),user.getUsername(),user.getPassword(),user.getRoles());
+    public ResponseEntity<User> addNewUser(@RequestBody User user){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        return new ResponseEntity<>(service.createUser(user.getName(),user.getSurname(),user.getAge(),
+                user.getEmail(),user.getUsername(),user.getPassword(),user.getRoles()), responseHeaders, HttpStatus.OK);
     }
 
     @PutMapping("/users")
-    public User editUser(@RequestBody User user){
-        return service.editUser(user.getId(),user.getName(),user.getSurname(),user.getAge(),
-                user.getEmail(),user.getUsername(),user.getPassword(),user.getRoles());
+    public ResponseEntity<User> editUser(@RequestBody User user){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        return new ResponseEntity<>(service.editUser(user.getId(),user.getName(),user.getSurname(),user.getAge(),
+                user.getEmail(),user.getUsername(),user.getPassword(),user.getRoles()), responseHeaders, HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")
-    public long deleteUser(@PathVariable long id){
+    public ResponseEntity<Long> deleteUser(@PathVariable long id){
         service.deleteUser(id);
-        return id;
+        HttpHeaders responseHeaders = new HttpHeaders();
+        return new ResponseEntity<>(id, responseHeaders, HttpStatus.OK);
     }
 
 }

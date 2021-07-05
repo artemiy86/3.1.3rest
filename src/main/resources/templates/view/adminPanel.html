@@ -13,15 +13,13 @@
     <div class="row">
         <nav class="navbar navbar-dark bg-dark navbar-expand d-flex" style="width:100%">
             <div class="p-2">
-            <span class="text-white font-weight-bold" th:text="${principal.email}"></span>
+            <span class="text-white font-weight-bold" id="userDetailEmail"></span>
             </div>
             <div class="p-2">
             <span class="text-white"> with roles: </span>
             </div>
-                <div class="p-2">
-                    <th:block th:each="role : ${roles}">
-                        <span class="text-white" th:text="${role.role}"></span>
-                    </th:block>
+                <div id="userDetailRoles" class="p-2">
+
                 </div>
             <div class="ml-auto p-2">
             <ul class="navbar-nav">
@@ -35,14 +33,14 @@
     </div>
     <div class="row">
         <div class="col-2 pl-0 pr-0 mt-3">
-            <nav class="navbar navbar-dark bg-primary">
-                <a class="text-white" href="/admin">Admin</a>
+            <nav id="adminNav" class="navbar navbar-dark bg-primary">
+                <a class="text-white" href="#" id="adminPanelButton">Admin</a>
             </nav>
-            <nav class="navbar navbar-light" style="background-color: white">
-                <a href="/user">User</a>
+            <nav id="userNav" class="navbar navbar-light" style="background-color: white">
+                <a href="#" id="userInfoButton">User</a>
             </nav>
         </div>
-        <div class="col-10 text-dark" style="min-height:1000px;background-color:#e9ecef;">
+        <div id="adminPanelDiv" class="col-10 text-dark" style="min-height:1000px;background-color:#e9ecef;">
             <h2 class="mt-3 mb-3">Admin panel</h2>
 
             <ul class="nav nav-tabs">
@@ -81,38 +79,36 @@
                     <div class="row">
                         <div class="col-4"></div>
                         <div class="col-4">
-                <form th:object="${newUser}" id="newUserForm">
-                    <input class="form-control" type="hidden" th:field="*{id}" id="id"/>
+                <form id="newUserForm">
+                    <input class="form-control" type="hidden" id="id"/>
                     <div class="form-group mb-2 text-center">
                             <label for="name" class="col-form-label col-form-label-lg pt-0 pb-0">First name</label>
-                            <input class="form-control" type="text" th:field="*{name}" id="name" />
+                            <input class="form-control" type="text"  id="name" />
                     </div>
                     <div class="form-group mb-2 text-center">
                             <label for="surname" class="col-form-label col-form-label-lg pt-0 pb-0">Last name</label>
-                            <input class="form-control" type="text" th:field="*{surname}" id="surname" />
+                            <input class="form-control" type="text" id="surname" />
                     </div>
                     <div class="form-group mb-2 text-center">
                             <label for="age" class="col-form-label col-form-label-lg pt-0 pb-0">Age</label>
-                            <input class="form-control" type="text" th:field="*{age}" id="age" />
+                            <input class="form-control" type="text" id="age" />
                         </div>
                     <div class="form-group mb-2 text-center">
                             <label for="email" class="col-form-label col-form-label-lg pt-0 pb-0">Email</label>
-                            <input type="text" class="form-control" th:field="*{email}" id="email" />
+                            <input type="text" class="form-control" id="email" />
                     </div>
                     <div class="form-group mb-2 text-center">
                             <label for="email" class="col-form-label col-form-label-lg pt-0 pb-0">Username</label>
-                            <input type="text" class="form-control" th:field="*{username}" id="username" />
+                            <input type="text" class="form-control" id="username" />
                     </div>
                     <div class="form-group mb-2 text-center">
                             <label for="password" class="col-form-label col-form-label-lg pt-0 pb-0">Password</label>
-                            <input type="password" class="form-control" th:field="*{password}" id="password" />
+                            <input type="password" class="form-control" id="password" />
                     </div>
                     <div class="form-group mb-2 text-center">
                         <label for="roles" class="col-form-label col-form-label-lg pt-0 pb-0">Role</label>
-                        <select class="form-control" multiple th:field="*{roles}" id="roles">
-                            <th:block th:each="role : ${roles}">
-                                <option th:value="${role.id}" th:text="${role.role}"></option>
-                            </th:block>
+                        <select class="form-control" multiple id="roles">
+
                         </select>
                     </div>
                     <div class="form-group text-center">
@@ -126,14 +122,66 @@
             </div>
             </div>
         </div>
+        <div id="userInfoDiv" class="col-10 text-dark" style="display:none;min-height:1000px;background-color:#e9ecef;">
+            <h2 class="mt-3 mb-3">User information-page</h2>
+            <div class="tab-content">
+                <div class="tab-pane active container" id="userDetail">
+                    <h6 class="pt-3 pb-3">About user</h6>
+                    <table id="userDetailTable" class="table table-hover bg-white">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Roles</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <div th:fragment="editUserModal" id="editUserModalForm"></div>
     <div th:fragment="deleteUserModal" id="deleteUserModalForm"></div>
+    <input type="hidden" id="user_id" th:value="${principal.id}">
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script type="text/javascript">
+
+    function getUserDetailInfo(user_id){
+        $("#userDetailTable tbody").empty();
+        $.ajax({
+            method: "get",
+            url: "/api/users/" + $("#user_id").val(),
+            success: function (data) {
+
+                $("#userDetailEmail").empty();
+                $("#userDetailEmail").append("<span>" + data.email + "</span>");
+
+                let tableInfo = "<tr><td>" + data.id + "</td>" + "<td>" + data.name + "</td>" + "<td>"
+                    + data.surname + "</td>" + "<td>" + data.age + "</td>" + "<td>" + data.email + "</td>"
+                    + "<td>" + data.username + "</td>" + "<td>";
+                $("#userDetailRoles").empty();
+                for(let i=0; i < data.roles.length; i++){
+                    tableInfo += data.roles[i].role + " ";
+                    $("#userDetailRoles").append("<span class='text-white'>" + data.roles[i].role + "</span> ");
+                };
+                tableInfo += "</td></tr>";
+                $("#userDetailTable tbody").append(tableInfo);
+
+
+            }
+        });
+    }
+
     function editUserModal(id){
         $.ajax({
             url : "admin/edit?id=" + id,
@@ -184,6 +232,32 @@
         });
     }
 
+    $("#userInfoButton").click(function(e){
+        e.preventDefault();
+        $("#adminNav").removeClass("navbar-dark");
+        $("#adminNav").removeClass("bg-primary");
+        $("#adminNav a").removeClass("text-white");
+        $("#userNav a").addClass("text-white");
+        $("#userNav").addClass("navbar-dark");
+        $("#userNav").addClass("bg-primary");
+        $("#adminPanelDiv").css({"display" : "none"});
+        $("#userInfoDiv").css({"display" : "block"});
+    });
+
+    $("#adminPanelButton").click(function(e){
+        e.preventDefault();
+        $("#adminNav").addClass("navbar-dark");
+        $("#adminNav").addClass("bg-primary");
+        $("#adminNav").removeClass("navbar-light");
+        $("#adminNav a").addClass("text-white");
+        $("#userNav").removeClass("navbar-dark");
+        $("#userNav").removeClass("bg-primary");
+        $("#userNav a").removeClass("text-white");
+        $("#userNav").addClass("navbar-light");
+        $("#adminPanelDiv").css({"display" : "block"});
+        $("#userInfoDiv").css({"display" : "none"});
+    });
+
     $("#addNewUserButton").click(function(e){
         e.preventDefault();
         let user = {};
@@ -210,6 +284,7 @@
             data : json,
             success : function(data){
                 $("#newUserForm")[0].reset();
+                getUserDetailInfo($("user_id").val());
                 fillUsersTable();
                 $("#userTab").click();
             }
@@ -217,6 +292,16 @@
     });
 
     $(document).ready(function() {
+        $.ajax({
+            url: "/api/roles",
+            type : "get",
+            success : function(data){
+                for(let i=0; i<data.length; i++){
+                       $("#roles").append("<option value='" + data[i].id + "'>" + data[i].role + "<option>");
+                }
+            }
+        });
+        getUserDetailInfo($("user_id").val());
         fillUsersTable();
     });
 
